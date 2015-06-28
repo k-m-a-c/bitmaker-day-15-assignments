@@ -6,4 +6,54 @@
   <p><%= @product.formatted_price %></p>
 </div>
 
+<h3>Reviews</h3>
+
+  <% @product.reviews.each do |r| %>
+
+    <div class="review">
+      <p><%= r.comment %></p>
+      <br>
+
+      <% if r.user != nil %>
+        <p>by: <strong><%= r.user.email %></strong> | on: <%= r.created_at %></p>
+      <% end %>
+      <br>
+    </div>
+
+  <% end %>
+
+<% if current_user %>
+  <h4>New Review</h4>
+
+  <%= form_for([@product, @review]) do |f| %>
+
+    <% if @review.errors.any? %>
+
+      <div id="error_messages">
+        <h2><%= pluralize(@review.errors.count, "error") %> prohibited this review from being saved:</h2>
+        <ul>
+        <% @review.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+
+    <% end %>
+
+    <div class="field">
+      <%= f.label :comment %><br />
+      <%= f.text_area :comment %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+
+  <% end %>
+
+<% else %>
+  <p>Please <%= link_to "log in", new_session_path %> to add a review.</p>
+
+<% end %>
+
 <%= link_to 'Back', root_path %>
