@@ -1,0 +1,13 @@
+<h1>All ze ProduX!</h1>
+
+<p>Mek a noo produck</p>
+<%= button_to 'Make. New. Product', new_product_path, :method => :get %>
+
+<div class="product">
+  <% @products.each do |p| %>
+    <p><strong><%= p.name %></strong></p>
+    <p><%= p.description %></p>
+    <p><%= p.formatted_price %></p>
+    <p><%= link_to 'See Product', product_path(p) %></p>
+  <% end %>
+</div>
